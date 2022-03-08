@@ -12,12 +12,33 @@ public class Main extends JFrame {
     private JLabel text;
     private JLabel text00;
 
-    private JButton btnDigits[];
-    private JButton btnC;
-    private JButton btnSum;
-    private JButton btnEquals;
+    private Button btnDigits[];
+    private Button btnC;
+    private Button btnSum;
+    private Button btnEquals;
     private Long n1,n2;
 
+    public void setEquals(){
+        n2 = Long.parseLong(text.getText());
+        text00.setText(text00.getText()+n2+"=");
+        text.setText((n1+n2)+"");
+        n1 = n1 + n2;
+    }
+    public void setPlus(){
+        n1=Long.parseLong(text.getText());
+        text.setText("0");
+        text00.setText(n1 + "+");
+    }
+    public void setNumertoText(String s) {
+
+        int ii=Integer.parseInt(s);
+        long num =Long.parseLong(text.getText());
+        if(((int)Math.log10(num)+1)<19)
+        {
+            num=num*10+ii;
+            text.setText(num+"");
+        }
+    }
     public Main(){
         super("ماشین حساب");
         this.setBounds(100,100,width,height);
@@ -47,10 +68,10 @@ public class Main extends JFrame {
         btns.setPreferredSize(new Dimension(150,300  ));
         btns.setBackground(Color.red);
         btns.setLayout(new FlowLayout());
-        btnDigits = new JButton[10]; //0...9
+        btnDigits = new Button[10]; //0...9
         for(int i=0;i<10;i++)
         {
-            btnDigits[i]=new JButton();
+            btnDigits[i]=new Button(this);
             btnDigits[i].setPreferredSize(new Dimension(45, 30));
             btnDigits[i].setFont(new Font("tahoma",1,10));
             btnDigits[i].setText(i+"");
@@ -59,19 +80,13 @@ public class Main extends JFrame {
             btnDigits[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Long num =Long.parseLong(text.getText());
-                    if(((int)Math.log10(num)+1)<19)
-                    {
-                        num=num*10+ii;
-                        System.out.println(num);
-                        text.setText(num+"");
-                    }
+                    setNumertoText(ii+"");
 
                 }
             });
         }
 
-        btnC=new JButton();
+        btnC=new Button(this);
         btnC.setPreferredSize(new Dimension(45, 30));
         btnC.setText("C");
         btnC.addActionListener(new ActionListener() {
@@ -81,29 +96,23 @@ public class Main extends JFrame {
             }
         });
 
-        btnEquals=new JButton();
+        btnEquals=new Button(this);
         btnEquals.setPreferredSize(new Dimension(45, 30));
         btnEquals.setText("=");
         btnEquals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                n2 = Long.parseLong(text.getText());
-                text00.setText(text00.getText()+n2+"=");
-                text.setText((n1+n2)+"");
-                n1 = n1 + n2;
+                setEquals();
             }
         });
 
-        btnSum=new JButton();
+        btnSum=new Button(this);
         btnSum.setPreferredSize(new Dimension(45, 30));
         btnSum.setText("+");
         btnSum.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                n1=Long.parseLong(text.getText());
-                text.setText("0");
-                text00.setText(n1 + "+");
-
+                setPlus();
             }
         });
 
